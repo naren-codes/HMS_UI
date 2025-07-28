@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <title>Hospital Management System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,5 +63,180 @@
     </div>
   </footer>
 
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Patient Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-primary">HMS</h4>
+                        <h6 class="fw-light">Patient Dashboard</h6>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">
+                                <i class="bi bi-house-door"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="book-appointment.html">
+                                <i class="bi bi-calendar-plus"></i>
+                                Book Appointment
+                            </a>
+                        </li>                        <li class="nav-item">
+                            <a class="nav-link" href="appointment-history.html">
+                                <i class="bi bi-clock-history"></i>
+                                Appointment History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html">
+                                <i class="bi bi-person"></i>
+                                Profile
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Patient Dashboard</h1>                    <div class="btn-toolbar mb-2 mb-md-0 d-flex align-items-center">
+                        <div class="btn-group me-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary position-relative" aria-label="Notifications">
+                                <i class="bi bi-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    2
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Settings">
+                                <i class="bi bi-gear"></i>
+                            </button>
+                        </div>
+                        <div class="profile-container">
+                            <div class="dropdown">                                <button class="profile-button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+                                    <li class="dropdown-header">John Doe</li>
+                                    <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock me-2"></i>Privacy Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Overview -->
+                <div class="row">                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Book Appointment</h5>
+                                <p class="card-text">Schedule a new appointment with a doctor.</p>
+                                <a href="book-appointment.html" class="btn btn-primary">Book Now</a>
+                            </div>
+                        </div>
+                    </div><div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Appointment History</h5>
+                                <p class="card-text">View your past and upcoming appointments.</p>
+                                <a href="appointment-history.html" class="btn btn-primary">View History</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>                <!-- Your Recent Activities -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Your Recent Activities</h3>
+                    <a href="appointment-history.html" class="btn btn-sm btn-outline-primary">View All <i class="bi bi-arrow-right"></i></a>
+                </div>
+                
+                <div id="recentActivitiesList">
+                    <!-- This section will be populated dynamically when user performs actions -->
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="activity-icon bg-primary text-white">
+                                    <i class="bi bi-calendar-check"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">No recent activities</h5>
+                                    <small class="text-muted">Your recent actions will appear here</small>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted">
+                                Book an appointment, view your medical history, or update your profile to see activities here.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Activities (Hidden by default) -->
+                <div class="d-none" id="activityTemplates">
+                    <!-- Appointment Booked Template -->
+                    <div class="card mb-3 border-0 shadow-sm activity-item" data-activity-type="appointment-booked">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="activity-icon bg-primary text-white">
+                                    <i class="bi bi-calendar-plus"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">Appointment Booked</h5>
+                                    <small class="text-muted activity-time">Just now</small>
+                                </div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-info">New</span>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                You booked an appointment with <span class="activity-doctor">Dr. Name</span> for 
+                                <span class="activity-date">Date</span> at <span class="activity-time">Time</span>.
+                            </p>
+                            <div class="d-flex justify-content-end">
+                                <a href="appointment-history.html" class="btn btn-sm btn-outline-secondary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Updated Template -->
+                    <div class="card mb-3 border-0 shadow-sm activity-item" data-activity-type="profile-updated">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="activity-icon bg-success text-white">
+                                    <i class="bi bi-person-check"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">Profile Updated</h5>
+                                    <small class="text-muted activity-time">Just now</small>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                You successfully updated your profile information.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+>>>>>>> 6d1d74a097abdea2297eb9bfdaa83c196722c46a
 </body>
 </html>

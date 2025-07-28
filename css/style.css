@@ -1,0 +1,348 @@
+/* Custom styles for HMS Patient Portal */
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar .text-center {
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    background: linear-gradient(to bottom, rgba(0, 123, 255, 0.05), transparent);
+}
+
+.sidebar .text-primary {
+    color: #007bff !important;
+    margin-bottom: 0.25rem;
+    letter-spacing: 1px;
+}
+
+.sidebar .fw-light {
+    font-weight: 300 !important;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+    padding: .75rem 1.25rem;
+    margin: .3rem 0;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(0, 123, 255, .08);
+    transform: translateX(3px);
+}
+
+.sidebar .nav-link.active {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, .1);
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .05);
+    border-left: 3px solid #007bff;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Main content styles */
+@media (min-width: 768px) {
+    .ms-sm-auto {
+        margin-left: 16.66% !important;
+    }
+}
+
+/* Card hover effects */
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+/* Form controls */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+/* Button hover effects */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, .1), 0 3px 6px rgba(0, 0, 0, .08);
+}
+
+/* Table styles */
+.table {
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Status badges */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* Profile page styles */
+#profileForm .form-control[readonly] {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    opacity: 1;
+}
+
+/* Appointment cards */
+.appointment-card {
+    border-left: 4px solid transparent;
+}
+
+.appointment-card.upcoming {
+    border-left-color: #007bff;
+}
+
+.appointment-card.completed {
+    border-left-color: #28a745;
+}
+
+.appointment-card.cancelled {
+    border-left-color: #dc3545;
+}
+
+/* Print styles */
+@media print {
+    .sidebar, .btn-toolbar, .no-print {
+        display: none !important;
+    }
+}
+
+/* Medical history timeline */
+.list-group-item {
+    border-left: 3px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    border-left-color: #007bff;
+    background-color: rgba(0, 123, 255, .05);
+}
+
+/* Modal styles */
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Profile dropdown styling */
+.profile-container {
+    margin-left: 8px;
+}
+
+.profile-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+    background: #f8f9fa;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.profile-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.profile-button i {
+    font-size: 1.5rem;
+    color: #6c757d;
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-header {
+    font-weight: 600;
+    color: #343a40;
+    padding: 0.75rem 1rem 0.25rem;
+}
+
+.dropdown-menu {
+    min-width: 14rem;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item i {
+    opacity: 0.7;
+    width: 1rem;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item:active {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.dropdown-divider {
+    margin: 0.25rem 0;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+.text-danger:hover {
+    background-color: #fdf1f2;
+}
+
+/* Activity cards styling */
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.activity-icon i {
+    font-size: 1.2rem;
+}
+
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+.bg-success {
+    background-color: #28a745 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.activity-item {
+    transition: transform 0.2s ease;
+}
+
+.activity-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: static;
+        height: auto;
+        padding-top: 0;
+    }
+    
+    .sidebar .text-center {
+        padding: 1rem;
+    }
+    
+    .sidebar .fw-bold {
+        font-size: 1.5rem;
+    }
+    
+    .sidebar .nav-link {
+        padding: .5rem 1rem;
+        margin: .2rem 0;
+    }
+    
+    body {
+        margin-top: 56px;
+    }
+    
+    .dropdown-toggle .d-none {
+        display: none !important;
+    }
+    
+    .profile-button {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .activity-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
