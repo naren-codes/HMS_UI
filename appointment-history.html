@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Appointment History</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-primary">HMS</h4>
+                        <h6 class="fw-light">Patient Dashboard</h6>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <i class="bi bi-house-door"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="book-appointment.html">
+                                <i class="bi bi-calendar-plus"></i>
+                                Book Appointment
+                            </a>
+                        </li>                        <li class="nav-item">
+                            <a class="nav-link active" href="appointment-history.html">
+                                <i class="bi bi-clock-history"></i>
+                                Appointment History
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html">
+                                <i class="bi bi-person"></i>
+                                Profile
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Appointment History</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0 d-flex align-items-center">
+                        <div class="btn-group me-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary position-relative" aria-label="Notifications">
+                                <i class="bi bi-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    2
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Settings">
+                                <i class="bi bi-gear"></i>
+                            </button>
+                        </div>
+                        <div class="profile-container">
+                            <div class="dropdown">                                <button class="profile-button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+                                    <li class="dropdown-header">John Doe</li>
+                                    <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock me-2"></i>Privacy Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <select class="form-select" id="statusFilter">
+                            <option value="all" selected>All Appointments</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" id="paymentFilter">
+                            <option value="all" selected>All Payment Status</option>
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">Unpaid</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                            <button class="btn btn-outline-secondary" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Table -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="appointmentsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Doctor</th>
+                                <th>Appointment Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsList">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- No Records Message -->
+                <div class="text-center mt-4 d-none" id="noRecords">
+                    <p class="text-muted">No appointment records found</p>
+                    <a href="book-appointment.html" class="btn btn-primary">Book New Appointment</a>
+                </div>
+
+                <!-- Appointment Details Modal -->
+                <div class="modal fade" id="appointmentDetailsModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Appointment Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Patient Information</h6>
+                                        <p><strong>Name:</strong> <span id="detailName"></span></p>
+                                        <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+                                        <p><strong>Contact:</strong> <span id="detailContact"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Appointment Information</h6>
+                                        <p><strong>Doctor:</strong> <span id="detailDoctor"></span></p>
+                                        <p><strong>Date:</strong> <span id="detailDate"></span></p>
+                                        <p><strong>Time:</strong> <span id="detailTime"></span></p>
+                                        <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>Medical History</h6>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div id="medicalHistory">
+                                                <p class="text-muted">No medical history available for this appointment.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="updatePaymentBtn">Mark as Paid</button>
+                                <button type="button" class="btn btn-danger" id="cancelAppointmentBtn">Cancel Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        $(document).ready(function() {
+            loadAppointments();
+            
+            // Load appointments from localStorage
+            function loadAppointments() {
+                const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                const tableBody = $('#appointmentsList');
+                tableBody.empty();
+                
+                if (appointments.length === 0) {
+                    $('#noRecords').removeClass('d-none');
+                    $('#appointmentsTable').addClass('d-none');
+                } else {
+                    $('#noRecords').addClass('d-none');
+                    $('#appointmentsTable').removeClass('d-none');
+                    
+                    appointments.forEach((appointment, index) => {
+                        const row = `
+                            <tr data-id="${appointment.id}">
+                                <td>${index + 1}</td>
+                                <td>${appointment.name}</td>
+                                <td>${appointment.email}</td>
+                                <td>${appointment.contact}</td>
+                                <td>${appointment.doctor}</td>
+                                <td>${appointment.date} ${appointment.time}</td>
+                                <td><span class="badge ${appointment.status === 'paid' ? 'bg-success' : 'bg-warning'}">${appointment.status}</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info view-details" data-id="${appointment.id}">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        tableBody.append(row);
+                    });
+                }
+                
+                // Add event listeners for view details buttons
+                $('.view-details').click(function() {
+                    const id = $(this).data('id');
+                    showAppointmentDetails(id);
+                });
+            }
+            
+            // Show appointment details in modal
+            function showAppointmentDetails(id) {
+                const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                const appointment = appointments.find(a => a.id == id);
+                
+                if (appointment) {
+                    $('#detailName').text(appointment.name);
+                    $('#detailEmail').text(appointment.email);
+                    $('#detailContact').text(appointment.contact);
+                    $('#detailDoctor').text(appointment.doctor);
+                    $('#detailDate').text(appointment.date);
+                    $('#detailTime').text(appointment.time);
+                    $('#detailStatus').html(`<span class="badge ${appointment.status === 'paid' ? 'bg-success' : 'bg-warning'}">${appointment.status}</span>`);
+                    
+                    // Update button state based on payment status
+                    if (appointment.status === 'paid') {
+                        $('#updatePaymentBtn').text('Mark as Unpaid').removeClass('btn-primary').addClass('btn-secondary');
+                    } else {
+                        $('#updatePaymentBtn').text('Mark as Paid').removeClass('btn-secondary').addClass('btn-primary');
+                    }
+                    
+                    // Store the current appointment ID for action buttons
+                    $('#updatePaymentBtn').data('id', id);
+                    $('#cancelAppointmentBtn').data('id', id);
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('appointmentDetailsModal'));
+                    modal.show();
+                }
+            }
+            
+            // Handle payment status update
+            $('#updatePaymentBtn').click(function() {
+                const id = $(this).data('id');
+                const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                const appointmentIndex = appointments.findIndex(a => a.id == id);
+                
+                if (appointmentIndex !== -1) {
+                    // Toggle payment status
+                    appointments[appointmentIndex].status = 
+                        appointments[appointmentIndex].status === 'paid' ? 'unpaid' : 'paid';
+                    
+                    // Update localStorage
+                    localStorage.setItem('appointments', JSON.stringify(appointments));
+                    
+                    // Reload appointments and close modal
+                    loadAppointments();
+                    $('#appointmentDetailsModal').modal('hide');
+                }
+            });
+            
+            // Handle appointment cancellation
+            $('#cancelAppointmentBtn').click(function() {
+                if (confirm('Are you sure you want to cancel this appointment?')) {
+                    const id = $(this).data('id');
+                    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                    appointments = appointments.filter(a => a.id != id);
+                    
+                    // Update localStorage
+                    localStorage.setItem('appointments', JSON.stringify(appointments));
+                    
+                    // Reload appointments and close modal
+                    loadAppointments();
+                    $('#appointmentDetailsModal').modal('hide');
+                }
+            });
+            
+            // Filter functionality
+            $('#statusFilter, #paymentFilter').change(function() {
+                filterAppointments();
+            });
+            
+            $('#searchInput').on('keyup', function() {
+                filterAppointments();
+            });
+            
+            function filterAppointments() {
+                const statusFilter = $('#statusFilter').val();
+                const paymentFilter = $('#paymentFilter').val();
+                const searchText = $('#searchInput').val().toLowerCase();
+                
+                $('#appointmentsList tr').each(function() {
+                    const row = $(this);
+                    const paymentStatus = row.find('td:nth-child(7) span').text().toLowerCase();
+                    const rowText = row.text().toLowerCase();
+                    
+                    // Apply filters
+                    let showRow = true;
+                    
+                    if (paymentFilter !== 'all' && paymentStatus !== paymentFilter) {
+                        showRow = false;
+                    }
+                    
+                    if (searchText !== '' && !rowText.includes(searchText)) {
+                        showRow = false;
+                    }
+                    
+                    // Show or hide based on filters
+                    if (showRow) {
+                        row.show();
+                    } else {
+                        row.hide();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
