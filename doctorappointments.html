@@ -155,9 +155,8 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="appointmentsTableBody">
-                                    <!-- Appointments will be populated here -->
-                                    <tr>
+                                <tbody id="appointmentsTableBody">                                    <!-- Appointments will be populated here -->
+                                    <tr data-appointment-id="1">
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <strong>July 29, 2025</strong>
@@ -198,7 +197,7 @@
                                         </td>
                                     </tr>
                                     
-                                    <tr>
+                                    <tr data-appointment-id="2">
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <strong>July 29, 2025</strong>
@@ -236,10 +235,9 @@
                                                     <i class="bi bi-x"></i>
                                                 </button>
                                             </div>
-                                        </td>
-                                    </tr>
+                                        </td>                                    </tr>
 
-                                    <tr>
+                                    <tr data-appointment-id="3">
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <strong>July 29, 2025</strong>
@@ -425,34 +423,88 @@
             
             $('#appointmentModalBody').html(appointmentDetails);
             $('#appointmentModal').modal('show');
-        }
-
-        function confirmAppointment(id) {
+        }        function confirmAppointment(id) {
             if (confirm('Are you sure you want to confirm this appointment?')) {
                 showAlert('Appointment confirmed successfully!', 'success');
-                // Update the status badge in the table
-                $(`tr:nth-child(${id}) .badge`).removeClass('bg-warning').addClass('bg-success').text('Confirmed');
+                
+                // Update the status badge in the table using data attribute
+                $(`tr[data-appointment-id="${id}"] .badge`)
+                    .removeClass('bg-warning bg-info bg-secondary')
+                    .addClass('bg-success')
+                    .text('Confirmed');
+                
+                // Also update the action buttons to show appropriate options for confirmed appointments
+                const actionButtons = $(`tr[data-appointment-id="${id}"] .btn-group`);
+                actionButtons.html(`
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment(${id})">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success" onclick="completeAppointment(${id})">
+                        <i class="bi bi-check"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="cancelAppointment(${id})">
+                        <i class="bi bi-x"></i>
+                    </button>
+                `);
             }
-        }
-
-        function completeAppointment(id) {
+        }        function completeAppointment(id) {
             if (confirm('Mark this appointment as completed?')) {
                 showAlert('Appointment marked as completed!', 'success');
-                // Update the status badge in the table
-                $(`tr:nth-child(${id}) .badge`).removeClass('bg-success bg-warning').addClass('bg-secondary').text('Completed');
+                
+                // Update the status badge in the table using data attribute
+                $(`tr[data-appointment-id="${id}"] .badge`)
+                    .removeClass('bg-success bg-warning bg-info')
+                    .addClass('bg-secondary')
+                    .text('Completed');
+                
+                // Update action buttons to show only view and cancel options for completed appointments
+                const actionButtons = $(`tr[data-appointment-id="${id}"] .btn-group`);
+                actionButtons.html(`
+                    <button class="btn btn-sm btn-outline-primary" onclick="viewAppointment(${id})">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info" onclick="viewReport(${id})">
+                        <i class="bi bi-file-text"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="cancelAppointment(${id})">
+                        <i class="bi bi-x"></i>
+                    </button>
+                `);
+            }
+        }        function cancelAppointment(id) {
+            if (confirm('Are you sure you want to cancel this appointment? This will remove the patient information from your appointments list.')) {
+                showAlert('Appointment cancelled successfully! Patient information has been removed.', 'success');
+                
+                // Remove the entire table row using data attribute
+                $(`tr[data-appointment-id="${id}"]`).fadeOut(300, function() {
+                    $(this).remove();
+                    
+                    // Update appointment counter
+                    const remainingCount = $('#appointmentsTableBody tr').length;
+                    $('#appointmentCount').text(`${remainingCount} appointments`);
+                    
+                    // Check if there are any appointments left
+                    if (remainingCount === 0) {
+                        $('#appointmentsTableBody').html(`
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    <i class="bi bi-calendar-x" style="font-size: 2rem;"></i>
+                                    <p class="mt-2 mb-0">No appointments scheduled</p>
+                                </td>
+                            </tr>
+                        `);
+                        $('#appointmentCount').text('0 appointments');
+                    }
+                });
             }
         }
 
-        function cancelAppointment(id) {
-            if (confirm('Are you sure you want to cancel this appointment?')) {
-                showAlert('Appointment cancelled successfully!', 'success');
-                // Update the status badge in the table
-                $(`tr:nth-child(${id}) .badge`).removeClass('bg-success bg-warning').addClass('bg-danger').text('Cancelled');
-            }
+        function viewReport(id) {
+            showAlert('View report functionality would be implemented here', 'info');
         }
 
         function createPrescription() {
-            window.location.href = 'doctor-prescriptions.html';
+            window.location.href = 'doctorprescriptions.html';
         }
     </script>
 
@@ -479,10 +531,43 @@
         .table-responsive {
             max-height: 600px;
             overflow-y: auto;
+        }        .btn-group .btn {
+            margin: 0 2px;
         }
 
-        .btn-group .btn {
-            margin: 0 2px;
+        /* Enhanced button hover effects */
+        .btn-outline-success:hover {
+            background-color: #198754;
+            border-color: #198754;
+            transform: scale(1.05);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            transform: scale(1.05);
+        }
+
+        .btn-outline-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-outline-info:hover {
+            transform: scale(1.05);
+        }
+
+        /* Badge animations */
+        .badge {
+            transition: all 0.3s ease;
+        }
+
+        /* Row fade effect */
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa !important;
         }
     </style>
 </body>
