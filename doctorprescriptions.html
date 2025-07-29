@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Prescriptions Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="bi bi-hospital text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                        <h4 class="fw-bold text-primary">HMS</h4>
+                        <h6 class="fw-light">Doctor Portal</h6>
+                    </div>
+                    <ul class="nav flex-column">                        <li class="nav-item">
+                            <a class="nav-link" href="doctordashboard.html">
+                                <i class="bi bi-house-door"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="doctorappointments.html">
+                                <i class="bi bi-calendar-check"></i>
+                                My Appointments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="doctorschedule.html">
+                                <i class="bi bi-clock"></i>
+                                Schedule Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="doctorprescriptions.html">
+                                <i class="bi bi-file-medical"></i>
+                                Prescriptions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="doctorprofile.html">
+                                <i class="bi bi-person"></i>
+                                My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link" href="#changePasswordModal" data-bs-toggle="modal">
+                                <i class="bi bi-key"></i>
+                                Change Password
+                            </a>
+                        </li>                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="patinet.html">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Switch to Patient
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Prescriptions Management</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0 d-flex align-items-center">
+                        <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#newPrescriptionModal">
+                            <i class="bi bi-plus-circle"></i> New Prescription
+                        </button>
+                        <div class="btn-group me-3">
+                            <button type="button" class="btn btn-sm btn-outline-secondary position-relative" aria-label="Notifications">
+                                <i class="bi bi-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    5
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Settings">
+                                <i class="bi bi-gear"></i>
+                            </button>
+                        </div>
+                        <div class="profile-container">
+                            <div class="dropdown">
+                                <button class="profile-button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+                                    <li class="dropdown-header">Dr. Sarah Johnson</li>
+                                    <li><a class="dropdown-item" href="doctor-profile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock me-2"></i>Privacy Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="searchPatient" class="form-label">Search Patient</label>
+                                <input type="text" class="form-control" id="searchPatient" placeholder="Search by patient name or ID...">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="dateFilter" class="form-label">Filter by Date</label>
+                                <input type="date" class="form-control" id="dateFilter">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="statusFilter" class="form-label">Filter by Status</label>
+                                <select class="form-select" id="statusFilter">
+                                    <option value="">All Prescriptions</option>
+                                    <option value="active">Active</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">&nbsp;</label>
+                                <button class="btn btn-primary w-100" id="applyFilters">
+                                    <i class="bi bi-search"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prescriptions List -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="bi bi-file-medical me-2"></i>Recent Prescriptions</h5>
+                        <span class="badge bg-primary" id="prescriptionCount">15 prescriptions</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="prescriptionsTable">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Patient</th>
+                                        <th>Medications</th>
+                                        <th>Diagnosis</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="prescriptionsTableBody">
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <strong>July 29, 2025</strong>
+                                                <small class="text-muted">RX-001</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="patient-avatar bg-primary text-white rounded-circle me-2">
+                                                    JD
+                                                </div>
+                                                <div>
+                                                    <strong>John Doe</strong>
+                                                    <br><small class="text-muted">PAT-001</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <strong>Amoxicillin 500mg</strong><br>
+                                                <small class="text-muted">3 times daily for 7 days</small>
+                                            </div>
+                                        </td>
+                                        <td>Bacterial Infection</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription(1)">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-info" onclick="editPrescription(1)">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success" onclick="printPrescription(1)">
+                                                    <i class="bi bi-printer"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <strong>July 28, 2025</strong>
+                                                <small class="text-muted">RX-002</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="patient-avatar bg-success text-white rounded-circle me-2">
+                                                    JS
+                                                </div>
+                                                <div>
+                                                    <strong>Jane Smith</strong>
+                                                    <br><small class="text-muted">PAT-002</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <strong>Hydrocortisone Cream 1%</strong><br>
+                                                <small class="text-muted">Apply twice daily</small>
+                                            </div>
+                                        </td>
+                                        <td>Eczema</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription(2)">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-info" onclick="editPrescription(2)">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success" onclick="printPrescription(2)">
+                                                    <i class="bi bi-printer"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <strong>July 27, 2025</strong>
+                                                <small class="text-muted">RX-003</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="patient-avatar bg-warning text-white rounded-circle me-2">
+                                                    MJ
+                                                </div>
+                                                <div>
+                                                    <strong>Mike Johnson</strong>
+                                                    <br><small class="text-muted">PAT-003</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <strong>Ibuprofen 400mg</strong><br>
+                                                <small class="text-muted">As needed for pain</small>
+                                            </div>
+                                        </td>
+                                        <td>Muscle Strain</td>
+                                        <td><span class="badge bg-secondary">Completed</span></td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-sm btn-outline-primary" onclick="viewPrescription(3)">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success" onclick="printPrescription(3)">
+                                                    <i class="bi bi-printer"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Prescription Modal -->
+    <div class="modal fade" id="newPrescriptionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Prescription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="prescriptionForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="patientSelect" class="form-label">Select Patient</label>
+                                <select class="form-select" id="patientSelect" required>
+                                    <option value="">Choose a patient</option>
+                                    <option value="1">John Doe (PAT-001)</option>
+                                    <option value="2">Jane Smith (PAT-002)</option>
+                                    <option value="3">Mike Johnson (PAT-003)</option>
+                                    <option value="4">Sarah Wilson (PAT-004)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prescriptionDate" class="form-label">Prescription Date</label>
+                                <input type="date" class="form-control" id="prescriptionDate" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="diagnosis" class="form-label">Diagnosis</label>
+                            <input type="text" class="form-control" id="diagnosis" placeholder="Enter diagnosis" required>
+                        </div>
+
+                        <!-- Medications Section -->
+                        <div class="mb-3">
+                            <label class="form-label">Medications</label>
+                            <div id="medicationsContainer">
+                                <div class="medication-item border rounded p-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Medication Name</label>
+                                            <input type="text" class="form-control medication-name" placeholder="e.g., Amoxicillin" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Dosage</label>
+                                            <input type="text" class="form-control medication-dosage" placeholder="e.g., 500mg" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Frequency</label>
+                                            <select class="form-select medication-frequency" required>
+                                                <option value="">Select frequency</option>
+                                                <option value="once-daily">Once daily</option>
+                                                <option value="twice-daily">Twice daily</option>
+                                                <option value="three-times-daily">Three times daily</option>
+                                                <option value="four-times-daily">Four times daily</option>
+                                                <option value="as-needed">As needed</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">Duration</label>
+                                            <input type="text" class="form-control medication-duration" placeholder="e.g., 7 days" required>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button" class="btn btn-outline-danger remove-medication">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12">
+                                            <label class="form-label">Instructions</label>
+                                            <textarea class="form-control medication-instructions" rows="2" placeholder="Special instructions for this medication"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline-primary" id="addMedication">
+                                <i class="bi bi-plus"></i> Add Another Medication
+                            </button>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Additional Notes</label>
+                            <textarea class="form-control" id="notes" rows="3" placeholder="Any additional notes or instructions"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="followUp" class="form-label">Follow-up Instructions</label>
+                            <textarea class="form-control" id="followUp" rows="2" placeholder="When should the patient return or follow up"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="savePrescription">Create Prescription</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Prescription Modal -->
+    <div class="modal fade" id="viewPrescriptionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Prescription Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="prescriptionDetails">
+                    <!-- Prescription details will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="printPrescription()">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="currentPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="savePasswordBtn">Change Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+    
+    <!-- Alert Container for Custom Notifications -->
+    <div class="alert-container" id="alertContainer"></div>
+    
+    <script>
+        $(document).ready(function() {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            $('#prescriptionDate').val(today);
+
+            // Function to show custom alert
+            function showAlert(message, type) {
+                const alertId = 'alert-' + Date.now();
+                const alertHtml = `
+                    <div id="${alertId}" class="custom-alert alert-${type}">
+                        <div class="alert-icon">
+                            <i class="bi ${type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'}"></i>
+                        </div>
+                        <div class="alert-message">${message}</div>
+                        <button class="alert-close" onclick="$('#${alertId}').fadeOut('fast', function() { $(this).remove(); });">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                `;
+                
+                $('#alertContainer').append(alertHtml);
+                
+                setTimeout(function() {
+                    $(`#${alertId}`).fadeOut('slow', function() {
+                        $(this).remove();
+                    });
+                }, 5000);
+            }
+
+            // Add medication functionality
+            $('#addMedication').click(function() {
+                const medicationHtml = `
+                    <div class="medication-item border rounded p-3 mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Medication Name</label>
+                                <input type="text" class="form-control medication-name" placeholder="e.g., Amoxicillin" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Dosage</label>
+                                <input type="text" class="form-control medication-dosage" placeholder="e.g., 500mg" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Frequency</label>
+                                <select class="form-select medication-frequency" required>
+                                    <option value="">Select frequency</option>
+                                    <option value="once-daily">Once daily</option>
+                                    <option value="twice-daily">Twice daily</option>
+                                    <option value="three-times-daily">Three times daily</option>
+                                    <option value="four-times-daily">Four times daily</option>
+                                    <option value="as-needed">As needed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control medication-duration" placeholder="e.g., 7 days" required>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-outline-danger remove-medication">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <label class="form-label">Instructions</label>
+                                <textarea class="form-control medication-instructions" rows="2" placeholder="Special instructions for this medication"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                $('#medicationsContainer').append(medicationHtml);
+            });
+
+            // Remove medication functionality
+            $(document).on('click', '.remove-medication', function() {
+                if ($('.medication-item').length > 1) {
+                    $(this).closest('.medication-item').remove();
+                } else {
+                    showAlert('At least one medication is required', 'danger');
+                }
+            });
+
+            // Save prescription
+            $('#savePrescription').click(function() {
+                const patientId = $('#patientSelect').val();
+                const diagnosis = $('#diagnosis').val();
+                
+                if (!patientId || !diagnosis) {
+                    showAlert('Please fill all required fields', 'danger');
+                    return;
+                }
+
+                // Collect medication data
+                const medications = [];
+                $('.medication-item').each(function() {
+                    const medication = {
+                        name: $(this).find('.medication-name').val(),
+                        dosage: $(this).find('.medication-dosage').val(),
+                        frequency: $(this).find('.medication-frequency').val(),
+                        duration: $(this).find('.medication-duration').val(),
+                        instructions: $(this).find('.medication-instructions').val()
+                    };
+                    
+                    if (medication.name && medication.dosage && medication.frequency && medication.duration) {
+                        medications.push(medication);
+                    }
+                });
+
+                if (medications.length === 0) {
+                    showAlert('Please add at least one complete medication', 'danger');
+                    return;
+                }
+
+                // Save prescription (in real app, send to server)
+                showAlert('Prescription created successfully!', 'success');
+                $('#newPrescriptionModal').modal('hide');
+                $('#prescriptionForm')[0].reset();
+                
+                // Reset medications container
+                $('#medicationsContainer').html(`
+                    <div class="medication-item border rounded p-3 mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label">Medication Name</label>
+                                <input type="text" class="form-control medication-name" placeholder="e.g., Amoxicillin" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Dosage</label>
+                                <input type="text" class="form-control medication-dosage" placeholder="e.g., 500mg" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Frequency</label>
+                                <select class="form-select medication-frequency" required>
+                                    <option value="">Select frequency</option>
+                                    <option value="once-daily">Once daily</option>
+                                    <option value="twice-daily">Twice daily</option>
+                                    <option value="three-times-daily">Three times daily</option>
+                                    <option value="four-times-daily">Four times daily</option>
+                                    <option value="as-needed">As needed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Duration</label>
+                                <input type="text" class="form-control medication-duration" placeholder="e.g., 7 days" required>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="button" class="btn btn-outline-danger remove-medication">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <label class="form-label">Instructions</label>
+                                <textarea class="form-control medication-instructions" rows="2" placeholder="Special instructions for this medication"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+
+            // Change password button click handler
+            $('#savePasswordBtn').click(function() {
+                const currentPassword = $('#currentPassword').val();
+                const newPassword = $('#newPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+                
+                if (!currentPassword || !newPassword || !confirmPassword) {
+                    showAlert('All password fields are required', 'danger');
+                    return;
+                }
+                
+                if (newPassword !== confirmPassword) {
+                    showAlert('New password and confirmation do not match', 'danger');
+                    return;
+                }
+                
+                $('#changePasswordModal').modal('hide');
+                $('#changePasswordForm')[0].reset();
+                showAlert('Password changed successfully!', 'success');
+            });
+        });
+
+        // Global functions
+        function viewPrescription(id) {
+            const prescriptionDetails = `
+                <div class="prescription-header text-center mb-4">
+                    <h4>Medical Prescription</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Dr. Sarah Johnson</strong><br>
+                            Dermatology Specialist<br>
+                            License: MD-123456789</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Date:</strong> July 29, 2025<br>
+                            <strong>Prescription ID:</strong> RX-001</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="patient-info mb-4">
+                    <h6>Patient Information</h6>
+                    <p><strong>Name:</strong> John Doe<br>
+                    <strong>Patient ID:</strong> PAT-001<br>
+                    <strong>Age:</strong> 45 years<br>
+                    <strong>Diagnosis:</strong> Bacterial Infection</p>
+                </div>
+
+                <div class="medications mb-4">
+                    <h6>Prescribed Medications</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Medication</th>
+                                    <th>Dosage</th>
+                                    <th>Frequency</th>
+                                    <th>Duration</th>
+                                    <th>Instructions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Amoxicillin</td>
+                                    <td>500mg</td>
+                                    <td>3 times daily</td>
+                                    <td>7 days</td>
+                                    <td>Take with food</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="notes">
+                    <h6>Additional Notes</h6>
+                    <p>Complete the full course of antibiotics even if symptoms improve.</p>
+                    
+                    <h6>Follow-up Instructions</h6>
+                    <p>Return if symptoms persist after 7 days or worsen.</p>
+                </div>
+            `;
+            
+            $('#prescriptionDetails').html(prescriptionDetails);
+            $('#viewPrescriptionModal').modal('show');
+        }
+
+        function editPrescription(id) {
+            showAlert('Edit functionality would be implemented here', 'info');
+        }
+
+        function printPrescription(id) {
+            window.print();
+        }
+    </script>
+
+    <style>
+        .patient-avatar {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .medication-item {
+            background-color: #f8f9fa;
+        }
+
+        .prescription-header {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 15px;
+        }
+
+        @media print {
+            .modal-header,
+            .modal-footer,
+            .btn {
+                display: none !important;
+            }
+        }
+    </style>
+</body>
+</html>
