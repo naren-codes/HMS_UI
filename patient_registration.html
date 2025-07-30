@@ -75,7 +75,15 @@
       return false;
     }
 
-    // If all validations pass
+    if(dob.value === ""){
+      alert("Please select a date of birth.");
+      return false;
+    }
+    if (address.value.lenth< 10){
+      alert("Address must be at least 10 characters long.");
+      return false;
+    }
+    // If all checks pass,allow form submission
     window.location.href = "Appointment.html";
   }
 
@@ -114,7 +122,7 @@
   <div class="container register" style="font-family: 'IBM Plex Sans', sans-serif;">
     <div class="row">
       <div class="col-md-3 register-left" style="margin-top: 10%;right: 5%">
-        <!-- <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/> -->
+       
         <span>
           <h3 class="move">Welcome to </h3>
           <h1 class="move">HMS</h1>
@@ -139,7 +147,7 @@
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <h3 class="register-heading">Register as Patient</h3>
-            <!-- <form method="post" action="func2.html"> -->
+            
             <div class="row register-form">
 
               <div class="col-md-6">
@@ -166,7 +174,7 @@
                       <span>Female </span>
                     </label>
                   </div>
-                  <a href="patient-login.html">Already have an account?</a>
+                  <a href="patient_login.html">Already have an account?</a>
                 </div>
               </div>
 
@@ -195,13 +203,14 @@
               <textarea id="address" name="address" class="form-control" rows="3" placeholder="Your Address *" required></textarea>
              </div>
 
-                <input type="submit" class="btnRegister" name="patsub1" onclick="return checklen();" value="Register" />
-                <!-- <button class="btnRegister" onclick="gotofunc1()">Register</button> -->
+  
+               <input type="submit" class="btn btn-primary" name="patsub1" onclick="return checklen();" value="Register" />
+
               </div>
            
 
             </div>
-            <!-- </form> -->
+          
           </div>
 
 
@@ -232,7 +241,7 @@
                 alert("Invalid credential");
                 return false; 
               }
-              window.location.href = "func1.html";
+              window.location.href = "doctordashboard.html";
             }
           </script>
 
