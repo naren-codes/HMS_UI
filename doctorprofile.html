@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HMS - Doctor Profile</title>
+    <link rel="shortcut icon" href="./images/favicon.png">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -20,9 +21,9 @@
             <div class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <div class="text-center mb-4">
-                        <div class="mb-3">
-                            <i class="bi bi-hospital text-primary" style="font-size: 2rem;"></i>
-                        </div>
+                        <a class="navbar-brand" href="index.html">
+                            <img src="./images/favicon.png" alt="hospital image" width="30" height="30">HMS
+                        </a>
                         <h4 class="fw-bold text-primary">HMS</h4>
                         <h6 class="fw-light">Doctor Portal</h6>
                     </div>
@@ -95,9 +96,9 @@
                                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
                                     <li class="dropdown-header">Dr. Sarah Johnson</li>
                                     <li><a class="dropdown-item" href="doctorprofile.html"><i class="bi bi-person me-2"></i>My Profile</a></li>
-                                    <li><a class="dropdown-item" href="doctorprofile.html"><i class="bi bi-shield-lock me-2"></i>Privacy Settings</a></li>
+                                    <!-- <li><a class="dropdown-item" href="doctorprofile.html"><i class="bi bi-shield-lock me-2"></i>Privacy Settings</a></li> -->
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="doctor.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                                    <li><a class="dropdown-item text-danger" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -109,7 +110,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="card">
                             <div class="card-body text-center">
-                                <img src="https://via.placeholder.com/150" alt="Doctor Photo" class="profile-avatar mb-3">
+                                <img src="images/profile-icon.webp" alt="Doctor Photo" class="profile-avatar mb-3">
                                 <h5 class="card-title">Dr. Sarah Johnson</h5>
                                 <p class="text-muted">Doctor ID: DOC-98765</p>
                                 <p class="text-muted">Dermatology Specialist</p>
