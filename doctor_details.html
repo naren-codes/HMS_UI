@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="admin_dashboard.html">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="./images/favicon.png" alt="hospital logo" width="30" height="30" class="me-2">
                 <span class="fw-bold">HMS Admin</span>
             </a>
@@ -107,7 +107,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if the user is logged in
             if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
-                window.location.href = 'admin.html';
+                window.location.href = '#';
             }
 
             // Logout functionality
