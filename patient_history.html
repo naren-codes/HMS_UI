@@ -14,7 +14,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="admin_dashboard.html">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="./images/favicon.png" alt="hospital logo" width="30" height="30" class="me-2">
                 <span class="fw-bold">HMS Admin</span>
             </a>
@@ -42,8 +42,11 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="text-primary fw-bold">Patient Records</h1>
         </div>
-        <p class="text-muted">A comprehensive list of all patient details and their medical history.</p>
-
+        <!-- <p class="text-muted">A comprehensive list of all patient details and their medical history.</p> -->
+        <div class="d-flex justify-content-end mb-3">
+                    <!-- Button that links to the appointments page -->
+            <a href="admin_appointment.html" class="btn btn-primary shadow">Go to Appointments</a>
+        </div>
         <div class="card shadow-sm mb-4">
             <div class="card-body">
                 <div class="table-responsive">
@@ -88,7 +91,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check if the user is logged in
             if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
-                window.location.href = 'admin.html';
+                window.location.href = '#';
             }
 
             // Logout functionality
